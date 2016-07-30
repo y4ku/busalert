@@ -39,7 +39,7 @@ function getBusTime() {
 	predict().then(function(minutes) {
 		var data;
 		console.log(minutes)
-		if(minutes >= 1) {
+		if(minutes >= 5) {
 			data = "go";
 		} else {
 			data = "stop";
@@ -57,7 +57,7 @@ function getBusTime() {
 	})
 }
 
-setInterval(getBusTime, (30 * 1000))
+setInterval(getBusTime, (10 * 1000))
 
 // Set interval to check for bus
 //setInterval(getBusTime, [10 * 1000]);
