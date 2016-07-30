@@ -1,14 +1,50 @@
 var express = require('express');
 var app = express();
-var port = process.env.port;
 var path = require("path");
 
+var port = process.env.port;
+var myparticleemail = process.env.myparticleemail 
+var myparticlepw = process.env.myparticlepw 
+var myparticletoken = process.env.myparticletoken
 
+// Set up Photon
+var Particle = require("particle-api-js");
+var particle = new Particle();
+particle.login({ username: myparticleemail, password: myparticlepw });
+
+// Set up a home page / possible place to interface for which buses to watch on what days
 app.get('/',function(req,res){
   res.sendFile(path.join(__dirname+'/index.html'));
-  //__dirname : It will resolve to your project folder.
 });
 
 app.listen(port, function () {
   console.log('Example app listening on port: ' + port);
 });
+
+// Use CTA API and send to Photon
+function getBusTime() {
+	var data = [];
+	particle.publishEvent({ name: 'busalert', data: data, auth: myparticletoken })
+		.then(
+		  function (data) {
+		    console.log("Publishing to Photon...");
+		  },
+		  function (err) {
+		  	console.log("Failed to publish event. :(");
+		  }
+		);
+}
+
+// Set interval to check for bus
+//setInterval(getBusTime, [10 * 1000]);
+
+
+particle.publishEvent({ name: 'busalert', data: 'high', auth: myparticletoken })
+		.then(
+		  function (data) {
+		    console.log("Publishing to Photon...");
+		  },
+		  function (err) {
+		  	console.log("Failed to publish event. :(");
+		  }
+		);
