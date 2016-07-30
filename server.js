@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var path = require("path");
 
-var port = process.env.port;
+var port = process.env.port || 3000;
 var myparticleemail = process.env.myparticleemail 
 var myparticlepw = process.env.myparticlepw 
 var myparticletoken = process.env.myparticletoken
@@ -21,6 +21,18 @@ app.listen(port, function () {
   console.log('Example app listening on port: ' + port);
 });
 
+app.get('/blink', function(req,res){
+	particle.publishEvent({ name: 'busalert', data: 'high', auth: myparticletoken })
+	.then(
+	  function (data) {
+	    console.log("Publishing to Photon...");
+	  },
+	  function (err) {
+	  	console.log("Failed to publish event. :(");
+	  }
+	);
+});
+
 // Use CTA API and send to Photon
 function getBusTime() {
 	var data = [];
@@ -37,14 +49,3 @@ function getBusTime() {
 
 // Set interval to check for bus
 //setInterval(getBusTime, [10 * 1000]);
-
-
-particle.publishEvent({ name: 'busalert', data: 'high', auth: myparticletoken })
-		.then(
-		  function (data) {
-		    console.log("Publishing to Photon...");
-		  },
-		  function (err) {
-		  	console.log("Failed to publish event. :(");
-		  }
-		);

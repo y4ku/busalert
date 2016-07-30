@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/y4ku/busalert#readme",
   "dependencies": {
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "particle-api-js": "^5.3.0"
   }
 }
