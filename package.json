@@ -1,0 +1,23 @@
+{
+  "name": "busalert",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/y4ku/busalert.git"
+  },
+  "author": "Jakub Misterka <san.y4ku@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/y4ku/busalert/issues"
+  },
+  "homepage": "https://github.com/y4ku/busalert#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
