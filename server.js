@@ -38,13 +38,13 @@ app.get('/blink', function(req,res){
 function getBusTime() {
 	predict().then(function(minutes) {
 		var data;
-		console.log(minutes)
+
 		if(minutes >= 5) {
 			data = "go";
 		} else {
 			data = "stop";
 		}
-		console.log('sending: ' + data);
+
 		particle.publishEvent({ name: 'busalert', data: data, auth: myparticletoken })
 		.then(
 		  function (data) {
@@ -58,6 +58,3 @@ function getBusTime() {
 }
 
 setInterval(getBusTime, (10 * 1000))
-
-// Set interval to check for bus
-//setInterval(getBusTime, [10 * 1000]);
