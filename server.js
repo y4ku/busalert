@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var path = require("path");
+var predict = require(path.join(__dirname+'/get_cta_predictions.js'));
 
 var port = process.env.port || 3000;
 var myparticleemail = process.env.myparticleemail 
@@ -22,7 +23,7 @@ app.listen(port, function () {
 });
 
 app.get('/blink', function(req,res){
-	particle.publishEvent({ name: 'busalert', data: 'high', auth: myparticletoken })
+	particle.publishEvent({ name: 'busalert', data: 'go', auth: myparticletoken })
 	.then(
 	  function (data) {
 	    console.log("Publishing to Photon...");
@@ -35,8 +36,14 @@ app.get('/blink', function(req,res){
 
 // Use CTA API and send to Photon
 function getBusTime() {
-	var data = [];
-	particle.publishEvent({ name: 'busalert', data: data, auth: myparticletoken })
+	predict().then(function(minutes) {
+		var data;
+		if(minutes >= 4 && minutes <= 6) {
+			data = "go";
+		} else {
+			data = "stop";
+		}
+		particle.publishEvent({ name: 'busalert', data: data, auth: myparticletoken })
 		.then(
 		  function (data) {
 		    console.log("Publishing to Photon...");
@@ -45,7 +52,10 @@ function getBusTime() {
 		  	console.log("Failed to publish event. :(");
 		  }
 		);
+	})
 }
+
+setInterval(getBusTime, (30 * 1000))
 
 // Set interval to check for bus
 //setInterval(getBusTime, [10 * 1000]);
