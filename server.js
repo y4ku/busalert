@@ -39,7 +39,7 @@ function getBusTime() {
 	predict().then(function(minutes) {
 		var data;
 
-		if(minutes >= 5) {
+		if(minutes >= 4 && minutes <= 10) {
 			data = "go";
 		} else {
 			data = "stop";
@@ -57,4 +57,5 @@ function getBusTime() {
 	})
 }
 
+getBusTime();
 setInterval(getBusTime, (10 * 1000))
