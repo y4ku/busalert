@@ -38,11 +38,13 @@ app.get('/blink', function(req,res){
 function getBusTime() {
 	predict().then(function(minutes) {
 		var data;
-		if(minutes >= 4 && minutes <= 6) {
+		console.log(minutes)
+		if(minutes >= 1) {
 			data = "go";
 		} else {
 			data = "stop";
 		}
+		console.log('sending: ' + data);
 		particle.publishEvent({ name: 'busalert', data: data, auth: myparticletoken })
 		.then(
 		  function (data) {
