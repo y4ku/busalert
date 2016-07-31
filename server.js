@@ -57,5 +57,5 @@ function getBusTime() {
 	})
 }
 
-getBusTime();
-setInterval(getBusTime, (10 * 1000))
+//getBusTime();
+//setInterval(getBusTime, (10 * 1000))
